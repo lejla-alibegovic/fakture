@@ -1,0 +1,49 @@
+﻿@model faktura.Data.Dtos.Responses.Faktura
+@{ ViewBag.Title = "Read";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary", style = "margin-bottom: 20px" })
+<div class="form-group">
+    @Html.LabelFor(x => x.BrojFakture)
+    @Html.TextBoxFor(x => x.BrojFakture, new { @class = "form-control", disabled = true })
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.DatumKreiranja)
+    @Html.TextBoxFor(x => x.DatumKreiranja, new { @class = "form-control", disabled = true })
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.DatumDospijeca)
+    @Html.TextBoxFor(x => x.DatumDospijeca, new { @class = "form-control", disabled = true })
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.PrimateljFakture)
+    @Html.TextBoxFor(x => x.PrimateljFakture, new { @class = "form-control", disabled = true })
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.UkupnaCijenaBezPDV)
+    @Html.TextBoxFor(x => x.UkupnaCijenaBezPDV, new { @class = "form-control", disabled = true })
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.UkupnaCijenaSaPDV)
+    @Html.TextBoxFor(x => x.UkupnaCijenaSaPDV, new { @class = "form-control", disabled = true })
+</div>
+<div class="form-group">
+</div>
+<div id="items">
+    @for (int i = 0; i < Model.StavkeFakture.Count; i++)
+    {
+<div class="row row-item">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(x => Model.StavkeFakture[i].Opis)
+        @Html.TextBoxFor(x => Model.StavkeFakture[i].Opis, new { @class = "form-control", disabled = true })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(x => Model.StavkeFakture[i].Kolicina)
+        @Html.TextBoxFor(x => Model.StavkeFakture[i].Kolicina, new { @class = "form-control", disabled = true })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(x => Model.StavkeFakture[i].JedininaCijena)
+        @Html.TextBoxFor(x => Model.StavkeFakture[i].JedininaCijena, new { @class = "form-control", disabled = true })
+    </div>
+</div>}
+</div>
+

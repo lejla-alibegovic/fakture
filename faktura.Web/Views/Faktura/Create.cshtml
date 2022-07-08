@@ -1,0 +1,89 @@
+﻿@model faktura.Web.ViewModels.CreateViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary", style="margin-bottom: 20px"})
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        @Html.ValidationSummary()
+    </div>
+}
+
+@using (Html.BeginForm("Create", "Faktura", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(x => x.BrojFakture)
+        @Html.TextBoxFor(x => x.BrojFakture, new { @class = "form-control", placeholder = "Broj fakture: " })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.DatumKreiranja)
+        @Html.TextBoxFor(x => x.DatumKreiranja, new { @class = "form-control", placeholder = "Datum kreiranja: ", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.DatumDospijeca)
+        @Html.TextBoxFor(x => x.DatumDospijeca, new { @class = "form-control", placeholder = "Datum dospijeca", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.PrimateljFakture)
+        @Html.TextBoxFor(x => x.PrimateljFakture, new { @class = "form-control", placeholder = "Primatelj fakture" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.OdabraniPDV)
+        @Html.DropDownListFor(x => x.OdabraniPDV, Model.PDV, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-success" id="add-invoice-item-btn">Add Item</button>
+    </div>
+    <div id="items">
+        @for (int i = 0; i < Model.StavkeFakture.Count; i++)
+        {
+            <div class="row row-item">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(x => Model.StavkeFakture[i].Opis)
+                    @Html.TextBoxFor(x => Model.StavkeFakture[i].Opis, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(x => Model.StavkeFakture[i].Kolicina)
+                    @Html.TextBoxFor(x => Model.StavkeFakture[i].Kolicina, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(x => Model.StavkeFakture[i].JedininaCijena)
+                    @Html.TextBoxFor(x => Model.StavkeFakture[i].JedininaCijena, new { @class = "form-control" })
+                </div>
+            </div>
+        }
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary">
+}
+
+
+@section scripts{
+    <script>
+        var GetItem = function (number) {
+            return `
+        <div class="row row-item">
+            <div class="form-group col-md-4">
+                <label for="StavkeFakture[${number}].Opis">Item Description</label>
+                <input type="text" class="form-control" name="StavkeFakture[${number}].Opis">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="StavkeFakture[${number}].Kolicina">Kolicina</label>
+                <input type="number" class="form-control" name="StavkeFakture[${number}].Kolicina">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="StavkeFakture[${number}].JedininaCijena">Unit Price</label>
+                <input type="text" class="form-control" name="StavkeFakture[${number}].JedininaCijena">
+            </div>
+        </div>`;
+        }
+        $("#add-invoice-item-btn").on('click',
+            function (e) {
+                $("#items").append(GetItem($(".row-item").length));
+            });
+
+
+    </script>
+}

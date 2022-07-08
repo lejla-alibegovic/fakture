@@ -1,0 +1,52 @@
+﻿@model List<faktura.Data.Dtos.Responses.Faktura>
+@{ ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@if (TempData["Error"] != null)
+{
+<div class="alert alert-danger alert-dismissible show" role="alert">
+    <strong>@TempData["Error"]</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div> }
+            else if (TempData["Success"] != null)
+            {
+<div class="alert alert-success alert-dismissible show" role="alert">
+    <strong>@TempData["Success"]</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>}
+
+@Html.ActionLink("Kreiraj novu fakturu", "Create", null, new { @class = "btn btn-primary", style = "margin-bottom: 20px" })
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Broj fakture</th>
+            <th scope="col">Datum kreiranja</th>
+            <th scope="col">Datum dospijeca</th>
+            <th scope="col">Cijena bez PDV</th>
+            <th scope="col">Cijena sa PDV</th>
+            <th scope="col">Primatelj fakture</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+<tr>
+    <th>@invoice.BrojFakture</th>
+    <td>@invoice.DatumKreiranja</td>
+    <td>@invoice.DatumDospijeca</td>
+    <td>@invoice.UkupnaCijenaBezPDV</td>
+    <td>@invoice.UkupnaCijenaSaPDV</td>
+    <td>@invoice.PrimateljFakture</td>
+    <td>
+        @Html.ActionLink("Details", "Read", new { id = @invoice.Id }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Update", "Update", new { id = @invoice.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Delete", "Delete", new { id = @invoice.Id }, new { @class = "btn btn-danger" })
+    </td>
+</tr>}
+    </tbody>
+</table>
