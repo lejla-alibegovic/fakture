@@ -19,4 +19,13 @@ namespace faktura.Data.Context
             return new Context();
         }
     }
+    public class MyDbContext : DbContext
+    {
+        public MyDbContext():base("DefaultConnection")
+        {
+
+        }
+        public DbSet<Models.Faktura> Fakture { get; set; }
+        public DbSet<StavkeFakture> StavkeFakture { get; set; }
+    }
 }
